@@ -5,7 +5,6 @@ import VueAxios from "vue-axios";
 import JwtService from "./JwtService";
 import { useAuthStore } from "../stores/auth";
 import router from "../router";
-
 /**
  * @description service to call HTTP request via Axios
  */

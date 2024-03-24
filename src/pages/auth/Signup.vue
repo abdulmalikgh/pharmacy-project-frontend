@@ -30,7 +30,7 @@
       :rules="[(v) => !!v || 'Company Phone field is required']"
       class="mb-4"
       label="Company Phone"
-      type="phone"
+      type="tel"
     />
     <h2 class="mb-2 font-semibold">Personal Information</h2>
     <VaInput
@@ -143,19 +143,16 @@ const formData = ref({
 
 const submit = async () => {
   if (validate()) {
-    authStore
-      .register(formData.value)
-      .then((res) => {
-        console.log("hhh", res);
-        if (res) {
-          init({
-            message: "You've successfully signed up",
-            color: "success",
-          });
-          push({ name: "dashboard" });
-        }
-      })
-      .catch((error) => console.log("********", error));
+    try {
+      const res: any = await authStore.register(formData.value);
+      if (res) {
+        init({
+          message: "You've successfully signed up",
+          color: "success",
+        });
+        push({ name: "dashboard" });
+      }
+    } catch (error) {}
   }
 };
 

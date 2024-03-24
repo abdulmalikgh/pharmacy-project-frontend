@@ -1,9 +1,9 @@
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import ApiService from "../services/ApiService";
 import JwtService from "../services/JwtService";
 import { defineStore } from "pinia";
-
+import { useToast } from "vuestic-ui";
 interface User {
   id: number;
   first_name: string;
@@ -44,6 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
   const errors = ref({});
   const user = ref<User>({} as User);
   const isAuthenticated = ref(!!JwtService.getToken());
+  const { init } = useToast();
 
   function setAuth(response: ApiResponse) {
     isAuthenticated.value = true;
@@ -64,21 +65,39 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.clear();
   }
 
-  function register(payload: User) {
-    return ApiService.post("/register/tenant", payload)
-      .then(({ data }) => {
-        setAuth(data);
-        ApiService.setHeader();
-      })
-      .catch(({ response }) => {
-        setError(response);
-      });
+  async function register(payload: User) {
+    try {
+      const { data } = await ApiService.post("/register/tenant", payload);
+      setAuth(data);
+      ApiService.setHeader();
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    }
   }
 
   function logout() {
     purgeAuth();
   }
 
+  watch(
+    () => errors.value,
+    (value: any) => {
+      if (value) {
+        const { data } = value;
+
+        console.log(data.errors);
+        if (Object.keys(data.errors) && Object.keys(data.errors).length > 0) {
+          Object.values(data.errors).forEach((err: any) => {
+            init({
+              message: err.join(),
+              color: "danger",
+            });
+          });
+        }
+      }
+    },
+  );
   return {
     errors,
     user,
