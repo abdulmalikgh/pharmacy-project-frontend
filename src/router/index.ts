@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
       beforeRouteEnter(to, from, next) {
         const store = useAuthStore();
         store.logout();
-        next("/sign-in");
+        next("/login");
       },
     },
   },
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "admin",
     path: "/",
     component: AppLayout,
-    redirect: { name: "login" },
+    redirect: { name: "dashboard" },
     meta: {
       middleware: "auth",
     },
@@ -149,7 +149,7 @@ router.beforeEach((to, from, next) => {
     if (authStore.isAuthenticated) {
       next();
     } else {
-      next({ name: "sign-in" });
+      next({ name: "login" });
     }
   } else {
     next();

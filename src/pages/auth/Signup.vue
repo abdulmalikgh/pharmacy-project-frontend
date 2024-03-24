@@ -10,7 +10,7 @@
     <h2 class="mb-2 font-semibold">Company Information</h2>
     <VaInput
       v-model="formData.company_name"
-      :rules="[(v) => !!v || 'Company name field is required']"
+      :rules="[(v) => !!v || 'Company name is required']"
       class="mb-4"
       label="Company Name"
       type="text"
@@ -18,7 +18,7 @@
     <VaInput
       v-model="formData.company_email"
       :rules="[
-        (v) => !!v || 'Company Email field is required',
+        (v) => !!v || 'Company Email is required',
         (v) => /.+@.+\..+/.test(v) || 'Company Email should be valid',
       ]"
       class="mb-4"
@@ -27,22 +27,27 @@
     />
     <VaInput
       v-model="formData.company_phone"
-      :rules="[(v) => !!v || 'Company Phone field is required']"
+      :rules="[
+        (v) => !!v || 'Company phone number is required',
+        (v) =>
+          (v && v.length === 10 && /^\d+$/.test(v)) ||
+          'Company phone number must be 10 digits',
+      ]"
       class="mb-4"
-      label="Company Phone"
+      label="Company Phone Number"
       type="tel"
     />
     <h2 class="mb-2 font-semibold">Personal Information</h2>
     <VaInput
       v-model="formData.first_name"
-      :rules="[(v) => !!v || 'First name field is required']"
+      :rules="[(v) => !!v || 'First name is required']"
       class="mb-4"
       label="First Name"
       type="text"
     />
     <VaInput
       v-model="formData.last_name"
-      :rules="[(v) => !!v || 'Last name field is required']"
+      :rules="[(v) => !!v || 'Last name is required']"
       class="mb-4"
       label="Last Name"
       type="text"
@@ -50,7 +55,7 @@
     <VaInput
       v-model="formData.email"
       :rules="[
-        (v) => !!v || 'Email field is required',
+        (v) => !!v || 'Email is required',
         (v) => /.+@.+\..+/.test(v) || 'Email should be valid',
       ]"
       class="mb-4"
@@ -59,9 +64,14 @@
     />
     <VaInput
       v-model="formData.phone"
-      :rules="[(v) => !!v || 'Phone field is required']"
+      :rules="[
+        (v) => !!v || 'Phone number is required',
+        (v) =>
+          (v && v.length === 10 && /^\d+$/.test(v)) ||
+          'Phone number must be 10 digits',
+      ]"
       class="mb-4"
-      label="Phone"
+      label="Phone Number"
       type="tel"
     />
     <VaValue v-slot="isPasswordVisible" :default-value="false">
@@ -91,7 +101,7 @@
         ref="password2"
         v-model="formData.repeatPassword"
         :rules="[
-          (v) => !!v || 'Repeat Password field is required',
+          (v) => !!v || 'Repeat Password is required',
           (v) => v === formData.password || 'Passwords don\'t match',
         ]"
         :type="isPasswordVisible.value ? 'text' : 'password'"
@@ -114,7 +124,15 @@
     </VaValue>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" @click="submit"> Create account</VaButton>
+      <VaButton class="w-full" @click="submit" :disabled="authStore.loading">
+        <span v-if="authStore.loading" class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+        <span v-else> Create account </span>
+      </VaButton>
     </div>
   </VaForm>
 </template>

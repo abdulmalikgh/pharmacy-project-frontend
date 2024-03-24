@@ -44,6 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
   const errors = ref({});
   const user = ref<User>({} as User);
   const isAuthenticated = ref(!!JwtService.getToken());
+  const loading = ref(false);
   const { init } = useToast();
 
   function setAuth(response: ApiResponse) {
@@ -51,6 +52,7 @@ export const useAuthStore = defineStore("auth", () => {
     user.value = response.user;
     errors.value = {};
     JwtService.saveToken(response.access_token);
+    localStorage.setItem("authUser", JSON.stringify(user.value));
   }
 
   function setError(error: any) {
@@ -66,13 +68,17 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function register(payload: User) {
+    loading.value = true;
     try {
       const { data } = await ApiService.post("/register/tenant", payload);
       setAuth(data);
       ApiService.setHeader();
+      return data;
     } catch (error: any) {
       setError(error.response);
       throw error.response;
+    } finally {
+      loading.value = false;
     }
   }
 
@@ -85,9 +91,12 @@ export const useAuthStore = defineStore("auth", () => {
     (value: any) => {
       if (value) {
         const { data } = value;
-
-        console.log(data.errors);
-        if (Object.keys(data.errors) && Object.keys(data.errors).length > 0) {
+        if (
+          value &&
+          value.data &&
+          Object.keys(data.errors) &&
+          Object.keys(data.errors).length > 0
+        ) {
           Object.values(data.errors).forEach((err: any) => {
             init({
               message: err.join(),
@@ -99,6 +108,7 @@ export const useAuthStore = defineStore("auth", () => {
     },
   );
   return {
+    loading,
     errors,
     user,
     isAuthenticated,
