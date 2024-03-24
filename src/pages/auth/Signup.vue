@@ -7,7 +7,7 @@
         >Login</RouterLink
       >
     </p>
-
+    <h2 class="mb-2 font-semibold">Company Information</h2>
     <VaInput
       v-model="formData.company_name"
       :rules="[(v) => !!v || 'Company name field is required']"
@@ -30,8 +30,9 @@
       :rules="[(v) => !!v || 'Company Phone field is required']"
       class="mb-4"
       label="Company Phone"
-      type="email"
+      type="phone"
     />
+    <h2 class="mb-2 font-semibold">Personal Information</h2>
     <VaInput
       v-model="formData.first_name"
       :rules="[(v) => !!v || 'First name field is required']"
@@ -55,6 +56,13 @@
       class="mb-4"
       label="Email"
       type="email"
+    />
+    <VaInput
+      v-model="formData.phone"
+      :rules="[(v) => !!v || 'Phone field is required']"
+      class="mb-4"
+      label="Phone"
+      type="tel"
     />
     <VaValue v-slot="isPasswordVisible" :default-value="false">
       <VaInput
@@ -112,15 +120,16 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useForm, useToast } from "vuestic-ui";
+import { useAuthStore } from "../../stores/auth";
 
 const { validate } = useForm("form");
 const { push } = useRouter();
 const { init } = useToast();
-
-const formData = reactive({
+const authStore = useAuthStore();
+const formData = ref({
   company_name: "",
   company_email: "",
   company_phone: "",
@@ -130,15 +139,23 @@ const formData = reactive({
   password: "",
   phone: "",
   repeatPassword: "",
-});
+}) as any;
 
-const submit = () => {
+const submit = async () => {
   if (validate()) {
-    init({
-      message: "You've successfully signed up",
-      color: "success",
-    });
-    push({ name: "dashboard" });
+    authStore
+      .register(formData.value)
+      .then((res) => {
+        console.log("hhh", res);
+        if (res) {
+          init({
+            message: "You've successfully signed up",
+            color: "success",
+          });
+          push({ name: "dashboard" });
+        }
+      })
+      .catch((error) => console.log("********", error));
   }
 };
 

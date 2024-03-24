@@ -64,22 +64,14 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.clear();
   }
 
-  async function register(payload: User) {
+  function register(payload: User) {
     return ApiService.post("/register/tenant", payload)
       .then(({ data }) => {
         setAuth(data);
-        ApiService.setHeader()
+        ApiService.setHeader();
       })
       .catch(({ response }) => {
-        console.log(response);
-        if (response.data.error) {
-          setError([response.data.error]);
-        }
-
-        //multiple errors
-        if (response.data.errors) {
-          setError(response.data.errors);
-        }
+        setError(response);
       });
   }
 

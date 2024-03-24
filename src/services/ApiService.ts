@@ -22,7 +22,7 @@ class ApiService {
     ApiService.vueInstance = app;
     ApiService.vueInstance.use(VueAxios, axios);
     ApiService.vueInstance.axios.defaults.baseURL =
-      import.meta.env.VITE_APP_API_SERVICE_URL;
+      import.meta.env.VITE_APP_API_URL;
 
     /**
      * SPP - functions
