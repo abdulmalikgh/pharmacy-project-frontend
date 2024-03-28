@@ -34,8 +34,7 @@ class ApiService {
       function (error) {
         if (error.response && [401, 419].includes(error.response.status)) {
           const store = useAuthStore();
-          store.logout();
-          router.push({ name: "sign-in" });
+          store.refreshToken();
         }
         return Promise.reject(error);
       },
@@ -100,6 +99,10 @@ class ApiService {
    */
   public static post(resource: string, params: any): Promise<AxiosResponse> {
     return ApiService.vueInstance.axios.post(`${resource}`, params);
+  }
+
+  public static postW(resource: string): Promise<AxiosResponse> {
+    return ApiService.vueInstance.axios.post(`${resource}`);
   }
 
   /**

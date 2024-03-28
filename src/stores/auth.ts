@@ -34,6 +34,11 @@ interface User {
   company_alias: string;
 }
 
+interface LoginUer {
+  email: string;
+  password: string;
+}
+
 interface ApiResponse {
   access_token: string;
   token_type: string;
@@ -82,6 +87,46 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function login(payload: LoginUer) {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.post("/auth/login", payload);
+      setAuth(data);
+      return data;
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function refreshToken() {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.postW("/auth/refresh");
+      setAuth(data);
+      return data;
+    } catch (error: any) {
+      await singOut();
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function singOut() {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.postW("/auth/logout");
+      logout();
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    } finally {
+      loading.value = false;
+    }
+  }
+
   function logout() {
     purgeAuth();
   }
@@ -114,5 +159,7 @@ export const useAuthStore = defineStore("auth", () => {
     isAuthenticated,
     register,
     logout,
+    refreshToken,
+    login,
   };
 });
