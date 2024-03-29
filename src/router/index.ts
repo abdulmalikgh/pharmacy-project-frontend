@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
       beforeRouteEnter(to, from, next) {
         const store = useAuthStore();
         store.logout();
-        next("/login");
+        next("/auth/login");
       },
     },
   },

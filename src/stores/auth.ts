@@ -108,7 +108,8 @@ export const useAuthStore = defineStore("auth", () => {
       setAuth(data);
       return data;
     } catch (error: any) {
-      await singOut();
+      logout();
+      throw error;
     } finally {
       loading.value = false;
     }
@@ -117,8 +118,8 @@ export const useAuthStore = defineStore("auth", () => {
   async function singOut() {
     loading.value = true;
     try {
-      const { data } = await ApiService.postW("/auth/logout");
-      logout();
+      await ApiService.postW("/auth/logout");
+      purgeAuth();
     } catch (error: any) {
       setError(error.response);
       throw error.response;
