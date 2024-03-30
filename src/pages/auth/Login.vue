@@ -93,9 +93,9 @@ const submit = async () => {
         });
         push({ name: "dashboard" });
       }
+      loading.value = false;
     } catch (error) {
-    } finally {
-      () => (loading.value = false);
+      loading.value = false;
     }
   }
 };

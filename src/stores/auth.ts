@@ -44,10 +44,20 @@ interface ApiResponse {
   token_type: string;
   user: User;
 }
+interface changePassword {
+  password: string;
+  new_password: string;
+  first_time: boolean;
+}
 
 export const useAuthStore = defineStore("auth", () => {
   const errors = ref({});
   const user = ref<User>({} as User);
+  const storedUser: any = JSON.parse(localStorage.getItem("authUser") as any);
+  console.log("stored user", storedUser, user);
+  const authenticatedUser = ref<any>(
+    Object.keys(user.value).length ? user.value : storedUser,
+  );
   const isAuthenticated = ref(!!JwtService.getToken());
   const loading = ref(false);
   const { init } = useToast();
@@ -117,6 +127,19 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function changePassword(payload: changePassword) {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.patch("/auth/change/password", payload);
+      return data;
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    } finally {
+      loading.value = false;
+    }
+  }
+
   async function refreshToken() {
     loading.value = true;
     try {
@@ -147,7 +170,6 @@ export const useAuthStore = defineStore("auth", () => {
   function logout() {
     purgeAuth();
   }
-
   watch(
     () => errors.value,
     (value: any) => {
@@ -180,5 +202,7 @@ export const useAuthStore = defineStore("auth", () => {
     refreshToken,
     login,
     resetPassword,
+    changePassword,
+    authenticatedUser,
   };
 });
