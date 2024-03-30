@@ -101,6 +101,22 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function resetPassword(payload: any) {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.post(
+        "/auth/send/password-reset/request",
+        payload,
+      );
+      return data;
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    } finally {
+      loading.value = false;
+    }
+  }
+
   async function refreshToken() {
     loading.value = true;
     try {
@@ -153,6 +169,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
     },
   );
+
   return {
     loading,
     errors,
@@ -162,5 +179,6 @@ export const useAuthStore = defineStore("auth", () => {
     logout,
     refreshToken,
     login,
+    resetPassword,
   };
 });
