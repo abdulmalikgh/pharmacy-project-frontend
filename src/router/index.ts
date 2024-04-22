@@ -109,6 +109,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../pages/auth/CheckTheEmail.vue"),
       },
       {
+        path: "reset_password",
+        name: "reset-password",
+        component: () => import("../pages/auth/Reset_Password.vue"),
+      },
+      {
         path: "",
         redirect: { name: "login" },
       },

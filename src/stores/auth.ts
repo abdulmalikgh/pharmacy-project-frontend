@@ -127,6 +127,19 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function sendResetPassword(payload: any) {
+    loading.value = true;
+    try {
+      const { data } = await ApiService.post("/auth/reset/password", payload);
+      return data;
+    } catch (error: any) {
+      setError(error.response);
+      throw error.response;
+    } finally {
+      loading.value = false;
+    }
+  }
+
   async function changePassword(payload: changePassword) {
     loading.value = true;
     try {
@@ -168,7 +181,7 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   function logout() {
-    purgeAuth();
+    singOut();
   }
   watch(
     () => errors.value,
@@ -193,16 +206,19 @@ export const useAuthStore = defineStore("auth", () => {
   );
 
   return {
+    // variables
     loading,
     errors,
     user,
     isAuthenticated,
+    authenticatedUser,
+    // functions
     register,
     logout,
     refreshToken,
     login,
     resetPassword,
     changePassword,
-    authenticatedUser,
+    sendResetPassword,
   };
 });

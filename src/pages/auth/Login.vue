@@ -2,10 +2,7 @@
   <VaForm ref="form" @submit.prevent="submit">
     <h1 class="font-semibold text-4xl mb-4">Log in</h1>
     <p class="text-base mb-4 leading-5">
-      New to Vuestic?
-      <RouterLink :to="{ name: 'signup' }" class="font-semibold text-primary"
-        >Sign up</RouterLink
-      >
+      Enter your email and password to login to your account
     </p>
     <VaInput
       v-model="formData.email"
@@ -88,7 +85,7 @@ const submit = async () => {
       const res: any = await login(formData.value);
       if (res) {
         init({
-          message: "You've successfully signed up",
+          message: "You've successfully logged in",
           color: "success",
         });
         push({ name: "dashboard" });

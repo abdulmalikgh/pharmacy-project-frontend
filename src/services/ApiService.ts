@@ -88,6 +88,7 @@ class ApiService {
    * @param resource
    */
   public static get(resource: string): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.get(`${resource}`);
   }
 
@@ -98,10 +99,12 @@ class ApiService {
    * @param params
    */
   public static post(resource: string, params: any): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
   public static postW(resource: string): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.post(`${resource}`);
   }
 
@@ -117,6 +120,7 @@ class ApiService {
     slug: string,
     params: any,
   ): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
   }
 
@@ -127,6 +131,7 @@ class ApiService {
    * @param params
    */
   public static put(resource: string, params: any): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.put(`${resource}`, params);
   }
 
@@ -136,6 +141,7 @@ class ApiService {
    * @param resource
    */
   public static delete(resource: string): Promise<AxiosResponse> {
+    this.setHeader();
     return ApiService.vueInstance.axios.delete(resource);
   }
 
@@ -145,7 +151,8 @@ class ApiService {
    * @param params
    */
   public static patch(resource: string, params: any): Promise<AxiosResponse> {
-    return ApiService.vueInstance.axios.put(`${resource}`, params);
+    this.setHeader();
+    return ApiService.vueInstance.axios.patch(`${resource}`, params);
   }
 }
 
