@@ -13,6 +13,12 @@ export interface IIventory {
     expiry_date: string
 }
 
+export interface IIventToBrand {
+    quantity: number;
+    branch_id: number;
+    inventory_id: number
+}
+
 export const useAuthStore = defineStore("tenantInventory", () => {
     const inventory = ref<IIventory>();
     const inventories = ref<IIventory[]>([]);
@@ -24,6 +30,18 @@ export const useAuthStore = defineStore("tenantInventory", () => {
             const { data } = await ApiService.post("/tenant/admin/inventory", payload);
             inventory.value = data;
             inventories.value?.unshift(data)
+            return data;
+        } catch (error: any) {
+            throw error.response;
+        } finally {
+            loading.value = false;
+        };
+    };
+
+    async function addInventoryToBrand(payload: IIventToBrand) {
+        loading.value = true;
+        try {
+            const { data } = await ApiService.post("/tenant/admin/add/branch/inventory", payload);
             return data;
         } catch (error: any) {
             throw error.response;
@@ -47,6 +65,7 @@ export const useAuthStore = defineStore("tenantInventory", () => {
 
     return {
         addInventory,
-        fetchInventory
+        fetchInventory,
+        addInventoryToBrand
     };
 });
