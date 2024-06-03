@@ -150,9 +150,9 @@ class ApiService {
    * @param resource
    * @param params
    */
-  public static patch(resource: string, params: any): Promise<AxiosResponse> {
+  public static patch(resource: string): Promise<AxiosResponse> {
     this.setHeader();
-    return ApiService.vueInstance.axios.patch(`${resource}`, params);
+    return ApiService.vueInstance.axios.patch(`${resource}`);
   }
 }
 
