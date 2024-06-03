@@ -5,22 +5,25 @@ import { defineStore } from "pinia";
 import { useToast } from "vuestic-ui";
 
 
-export interface IBrand {
+export interface IIventory {
     name:string;
     description:string;
+    quantity: number;
+    price: number,
+    expiry_date: string
 }
 
-export const useAuthStore = defineStore("tenantBrand", () => {
-    const branch = ref<IBrand>();
-    const branches = ref<IBrand[]>([]);
+export const useAuthStore = defineStore("tenantInventory", () => {
+    const inventory = ref<IIventory>();
+    const inventories = ref<IIventory[]>([]);
     const loading = ref<Boolean>(false);
 
-    async function addBrand(payload: IBrand) {
+    async function addInventory(payload: IIventory) {
         loading.value = true;
         try {
-            const { data } = await ApiService.post("/tenant/admin/brand", payload);
-            branch.value = data;
-            branches.value?.unshift(data)
+            const { data } = await ApiService.post("/tenant/admin/inventory", payload);
+            inventory.value = data;
+            inventories.value?.unshift(data)
             return data;
         } catch (error: any) {
             throw error.response;
@@ -29,11 +32,11 @@ export const useAuthStore = defineStore("tenantBrand", () => {
         };
     };
 
-    async function fetchBrands() {
+    async function fetchInventory() {
         loading.value = true;
         try {
-            const { data } = await ApiService.get("/tenant/admin/brand");
-            branches.value = data;
+            const { data } = await ApiService.get("/tenant/admin/inventory");
+            inventories.value = data;
             return data;
         } catch (error: any) {
             throw error.response;
@@ -43,7 +46,7 @@ export const useAuthStore = defineStore("tenantBrand", () => {
     };
 
     return {
-        addBrand,
-        fetchBrands
+        addInventory,
+        fetchInventory
     };
 });

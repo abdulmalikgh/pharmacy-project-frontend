@@ -1,7 +1,6 @@
 import { computed, ref, watch } from "vue";
 
 import ApiService from "../services/ApiService";
-import JwtService from "../services/JwtService";
 import { defineStore } from "pinia";
 import { useToast } from "vuestic-ui";
 
