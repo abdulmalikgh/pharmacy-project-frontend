@@ -11,7 +11,7 @@ export interface ICustomer {
     email:string;
 }
 
-export const useAuthStore = defineStore("tenantBrand", () => {
+export const useAuthStore = defineStore("tenantCustomer", () => {
     const customer = ref<ICustomer>();
     const customers = ref<ICustomer[]>([]);
     const loading = ref<Boolean>(false);
