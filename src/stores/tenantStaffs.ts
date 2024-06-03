@@ -6,7 +6,7 @@ import { defineStore } from "pinia";
 import { useToast } from "vuestic-ui";
 
 
-export interface IAddStaf {
+export interface IStaff {
     first_name:string;
     last_name:string;
     email:string;
@@ -16,11 +16,11 @@ export interface IAddStaf {
 }
 
 export const useAuthStore = defineStore("tenantStaffs", () => {
-    const staff = ref<IAddStaf>();
-    const staffs = ref<IAddStaf[]>([]);
+    const staff = ref<IStaff>();
+    const staffs = ref<IStaff[]>([]);
     const loading = ref<Boolean>(false);
 
-    async function addStaff(payload: IAddStaf) {
+    async function addStaff(payload: IStaff) {
         loading.value = true;
         try {
             const { data } = await ApiService.post("/tenant/admin/staff", payload);

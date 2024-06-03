@@ -6,18 +6,18 @@ import { defineStore } from "pinia";
 import { useToast } from "vuestic-ui";
 
 
-export interface IAddStaf {
+export interface IBranch {
     name:string;
     location:string;
     address:string;
 }
 
 export const useAuthStore = defineStore("tenantBranches", () => {
-    const branch = ref<IAddStaf>();
-    const branches = ref<IAddStaf[]>([]);
+    const branch = ref<IBranch>();
+    const branches = ref<IBranch[]>([]);
     const loading = ref<Boolean>(false);
 
-    async function addBranch(payload: IAddStaf) {
+    async function addBranch(payload: IBranch) {
         loading.value = true;
         try {
             const { data } = await ApiService.post("/tenant/admin/branch", payload);
