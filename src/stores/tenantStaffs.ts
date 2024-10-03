@@ -14,15 +14,15 @@ export interface IStaff {
     staff_no:string;
 }
 
-export const useAuthStore = defineStore("tenantStaffs", () => {
-    const staff = ref<IStaff>();
-    const staffs = ref<IStaff[]>([]);
-    const loading = ref<Boolean>(false);
+export const useTenantSfaffsStore = defineStore("tenantStaffs", () => {
+    const staff = ref({} as IStaff);
+    const staffs = ref([] as IStaff[]);
+    const loading = ref(false as Boolean);
 
     async function addStaff(payload: IStaff) {
         loading.value = true;
         try {
-            const { data } = await ApiService.post("/tenant/admin/staff", payload);
+            const { data } = await ApiService.post("/tenant/admin/staffs", payload);
             staff.value = data;
             staffs.value?.unshift(data)
             return data;
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("tenantStaffs", () => {
         loading.value = true;
         try {
             const { data } = await ApiService.get("/tenant/admin/staff");
-            staffs.value = data;
+            staffs.value = data?.data;
             return data;
         } catch (error: any) {
             throw error.response;
@@ -59,6 +59,8 @@ export const useAuthStore = defineStore("tenantStaffs", () => {
     };
 
     return {
+        loading,
+        staffs,
         addStaff,
         blockStaff,
         fetchStaffs,

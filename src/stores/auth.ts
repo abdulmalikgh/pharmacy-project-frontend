@@ -54,7 +54,6 @@ export const useAuthStore = defineStore("auth", () => {
   const errors = ref({});
   const user = ref<User>({} as User);
   const storedUser: any = JSON.parse(localStorage.getItem("authUser") as any);
-  console.log("stored user", storedUser, user);
   const authenticatedUser = ref<any>(
     Object.keys(user.value).length ? user.value : storedUser,
   );

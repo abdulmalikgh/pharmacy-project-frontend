@@ -66,10 +66,16 @@ class ApiService {
    * @description set the default HTTP request headers
    */
   public static setHeader(): void {
+    const storedUser: any = JSON.parse(localStorage.getItem("authUser") as any);
     ApiService.vueInstance.axios.defaults.headers.common["Authorization"] =
       `Bearer ${JwtService.getToken()}`;
     ApiService.vueInstance.axios.defaults.headers.common["Accept"] =
       "application/json";
+      if(storedUser) {
+        ApiService.vueInstance.axios.defaults.headers.common["X-Company-Alias"] =
+        storedUser?.company_alias;
+      }
+    
   }
 
   /**
