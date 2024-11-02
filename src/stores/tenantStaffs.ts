@@ -11,11 +11,11 @@ export interface IStaff {
     last_name:string;
     email:string;
     phone:string;
-    dob:string;
-    staff_no:string;
+    dob?:string;
+    staff_no?:string;
     avatar?: string;
     role?: string;
-    is_active: boolean
+    is_active?: boolean
 }
 
 export const useTenantSfaffsStore = defineStore("tenantStaffs", () => {

@@ -4,6 +4,7 @@ import { useForm } from 'vuestic-ui'
 import UserAvatar from './UserAvatar.vue'
 import { validators } from '../../../../services/utils'
 import { IStaff } from '../../../../stores/tenantStaffs';
+import { isEqual } from 'lodash';
 
 const props = defineProps({
   staff: {
@@ -29,14 +30,15 @@ const defaultNewUser: IStaff = {
 const newUser = ref<IStaff>({ ...defaultNewUser })
 
 const isFormHasUnsavedChanges = computed(() => {
+  const staffToCompare = props.staff ?? defaultNewUser;
+
   return Object.keys(newUser.value).some((key) => {
     if (key === 'avatar') {
       return false
     }
-
-    return newUser.value[key as keyof IStaff] !== (props.staff ?? defaultNewUser)?.[key as keyof IStaff]
-  })
-})
+    return !isEqual(newUser.value[key as keyof IStaff], staffToCompare[key as keyof IStaff]);
+  });
+});
 
 defineExpose({
   isFormHasUnsavedChanges,
