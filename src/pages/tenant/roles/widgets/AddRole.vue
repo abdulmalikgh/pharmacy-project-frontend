@@ -2,8 +2,8 @@
 import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
 import { validators } from '../../../../services/utils'
-import { IStaff } from '../../../../stores/tenantStaffs';
 import { IRole } from '@/stores/tenantRoles';
+import { isEqual } from 'lodash';
 
 const props = defineProps({
   role: {
@@ -22,13 +22,15 @@ const defaultnewRole: IRole = {
   permissions: []
 }
 
-const newRole = ref<IRole>({ ...defaultnewRole })
+const newRole = ref<IRole>({ ...defaultnewRole });
 
 const isFormHasUnsavedChanges = computed(() => {
+  const roleToCompare = props.role ?? defaultnewRole;
+
   return Object.keys(newRole.value).some((key) => {
-    return newRole.value[key as keyof IRole] !== (props.role ?? defaultnewRole)?.[key as keyof IRole]
-  })
-})
+    return !isEqual(newRole.value[key as keyof IRole], roleToCompare[key as keyof IRole]);
+  });
+});
 
 defineExpose({
   isFormHasUnsavedChanges,
