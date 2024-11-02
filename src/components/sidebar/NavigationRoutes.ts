@@ -27,7 +27,14 @@ export default {
     },
     {
       name: 'staffs',
-      displayName: 'staffs',
+      displayName: 'menu.staffs',
+      meta: {
+        icon: 'group',
+      },
+    },
+    {
+      name: 'roles',
+      displayName: 'menu.roles',
       meta: {
         icon: 'group',
       },

@@ -27,9 +27,9 @@
       <VaBadge :text="rowData.role" />
     </template>
 
-    <template #cell(status)="{ rowData }">
-      <div class="ellipsis max-w-[300px] lg:max-w-[450px]">
-        {{  rowData.status }}
+    <template #cell(is_active)="{ rowData }">
+      <div class="text-center">
+        <VaBadge :text="rowData.is_active == 1 ? 'Active' : 'In-Active'" :color="rowData.is_active == 1 ? 'success' : 'danger'"/>
       </div>
     </template>
 
@@ -52,7 +52,7 @@
           size="small"
           icon="mso-edit"
           aria-label="Edit user"
-          @click="$emit('edit-user', rowData as IStaff)"
+          @click="$emit('edit-staff', rowData as IStaff)"
         />
         <VaButton
           preset="primary"
@@ -60,7 +60,7 @@
           icon="mso-lock"
           color="danger"
           aria-label="Delete user"
-          @click="onUserDelete(rowData as IStaff)"
+          @click="onStaffDelete(rowData as IStaff)"
         />
       </div>
     </template>
@@ -98,13 +98,13 @@ const columns = defineVaDataTableColumns([
 
 
 const emit = defineEmits<{
-  (event: 'edit-user', user: IStaff): void
-  (event: 'block-user', user: IStaff): void
+  (event: 'edit-staff', user: IStaff): void
+  (event: 'block-staff', user: IStaff): void
 }>()
 
-const onUserDelete = async (staff: IStaff) => {
+const onStaffDelete = async (staff: IStaff) => {
   const agreed = await confirm({
-    title: 'Delete staff',
+    title: 'Block staff',
     message: `Are you sure you want to block ${staff.first_name + " " + staff.last_name}?`,
     okText: 'Yes',
     cancelText: 'No',
@@ -113,7 +113,7 @@ const onUserDelete = async (staff: IStaff) => {
   })
 
   if (agreed) {
-    emit('block-user', staff)
+    emit('block-staff', staff)
   }
 }
 </script>

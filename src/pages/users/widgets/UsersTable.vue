@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
+import { defineVaDataTableColumns, useModal, useToast } from 'vuestic-ui'
 import { User, UserRole } from '../types'
 import UserAvatar from './UserAvatar.vue'
 import { PropType, computed, toRef } from 'vue'

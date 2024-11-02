@@ -6,12 +6,16 @@ import { useToast } from "vuestic-ui";
 
 
 export interface IStaff {
+    id?: number;
     first_name:string;
     last_name:string;
     email:string;
     phone:string;
     dob:string;
     staff_no:string;
+    avatar?: string;
+    role?: string;
+    is_active: boolean
 }
 
 export const useTenantSfaffsStore = defineStore("tenantStaffs", () => {

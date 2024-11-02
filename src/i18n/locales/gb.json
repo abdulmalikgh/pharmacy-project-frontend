@@ -54,6 +54,8 @@
     "404": "404",
     "faq": "FAQ",
     "users": "Users",
+    "staffs": "Staffs",
+    "roles": "Roles",
     "projects": "Projects"
   },
   "messages": {
