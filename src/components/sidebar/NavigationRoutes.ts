@@ -40,6 +40,13 @@ export default {
       },
     },
     {
+      name: 'branches',
+      displayName: 'menu.branches',
+      meta: {
+        icon: 'group',
+      },
+    },
+    {
       name: 'brands',
       displayName: 'menu.brands',
       meta: {

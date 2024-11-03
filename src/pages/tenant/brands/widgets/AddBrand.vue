@@ -1,30 +1,27 @@
 <template>
-  <VaForm v-slot="{ isValid }" ref="add-branch-form" class="flex-col justify-start items-start gap-4 inline-flex w-full">
+  <VaForm v-slot="{ isValid }" ref="add-brand-form" class="flex-col justify-start items-start gap-4 inline-flex w-full">
     <div class="self-stretch flex-col justify-start items-start gap-4 flex">
       <div class="flex gap-4 flex-col w-full">
+        <!-- Brand Name Input -->
         <VaInput
-          v-model="newBranch.name"
-          label="Branch Name"
+          v-model="newBrand.name"
+          label="Brand Name"
           class="w-full"
           :rules="[validators.required]"
           name="name"
         />
+
+        <!-- Brand Description Input -->
         <VaInput
-          v-model="newBranch.location"
-          label="Location"
+          v-model="newBrand.description"
+          label="Description"
           class="w-full"
           :rules="[validators.required]"
-          name="location"
-        />
-        <VaInput
-          v-model="newBranch.address"
-          label="Address"
-          class="w-full"
-          :rules="[validators.required]"
-          name="address"
+          name="description"
         />
       </div>
 
+      <!-- Action Buttons -->
       <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
         <VaButton preset="secondary" color="secondary" @click="$emit('close')">Cancel</VaButton>
         <VaButton :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
@@ -37,65 +34,67 @@
 import { PropType, ref, computed, watch } from 'vue';
 import { useForm } from 'vuestic-ui';
 import { validators } from '../../../../services/utils';
-import { IBranch } from '@/stores/tenantBranches';
-import { isEqual } from 'lodash'
+import { IBrand } from '@/stores/tenantBrands';
+import { isEqual } from 'lodash';
 
 const props = defineProps({
   saveButtonLabel: {
     type: String,
     default: 'Save',
   },
-  branch: {
-    type: Object as PropType<IBranch | null>,
+  brand: {
+    type: Object as PropType<IBrand | null>,
     default: null,
-  }
+  },
 });
 
-const defaultBranch: IBranch = {
+const defaultBrand: IBrand = {
   id: -1,
   name: '',
-  location: '',
-  address: '',
-}
+  description: '',
+};
 
-const newBranch = ref<IBranch>({
-  ...defaultBranch
+const newBrand = ref<IBrand>({
+  ...defaultBrand
 });
 
 const isFormHasUnsavedChanges = computed(() => {
-  const brandToCompare = props.branch ?? defaultBranch;
-  return Object.keys(newBranch.value).some((key) => {
-    return !isEqual(newBranch.value[key as keyof IBranch], brandToCompare[key as keyof IBranch]);
+  const brandToCompare = props.brand ?? defaultBrand;
+  return Object.keys(newBrand.value).some((key) => {
+    return !isEqual(newBrand.value[key as keyof IBrand], brandToCompare[key as keyof IBrand]);
   });
 });
 
 defineExpose({
   isFormHasUnsavedChanges,
-})
+});
 
 watch(
-  () => props.branch,
+  () => props.brand,
   () => {
-    if (!props.branch) {
-      return
+    if (!props.brand) {
+      return;
     }
-
-    newBranch.value = {
-      ...props.branch,
-    }
+    newBrand.value = {
+      ...props.brand,
+    };
   },
   { immediate: true },
-)
+);
 
-const form = useForm('add-branch-form');
-
+const form = useForm('add-brand-form');
 const emit = defineEmits(['close', 'save']);
 
 const onSave = () => {
   if (form.validate()) {
-    emit('save', newBranch.value);
+    emit('save', newBrand.value);
   }
 };
-
 </script>
 
+<style scoped>
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+</style>

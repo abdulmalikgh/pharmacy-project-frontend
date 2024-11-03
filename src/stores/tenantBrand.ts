@@ -10,17 +10,17 @@ export interface IBrand {
     description:string;
 }
 
-export const useAuthStore = defineStore("tenantBrand", () => {
-    const branch = ref<IBrand>();
-    const branches = ref<IBrand[]>([]);
+export const useTenantBrandStore = defineStore("tenantBrand", () => {
+    const brand = ref<IBrand>();
+    const brands = ref<IBrand[]>([]);
     const loading = ref<Boolean>(false);
 
     async function addBrand(payload: IBrand) {
         loading.value = true;
         try {
             const { data } = await ApiService.post("/tenant/admin/brand", payload);
-            branch.value = data;
-            branches.value?.unshift(data)
+            brand.value = data;
+            brands.value?.unshift(data)
             return data;
         } catch (error: any) {
             throw error.response;
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("tenantBrand", () => {
         loading.value = true;
         try {
             const { data } = await ApiService.get("/tenant/admin/brand");
-            branches.value = data;
+            brands.value = data;
             return data;
         } catch (error: any) {
             throw error.response;
@@ -43,6 +43,9 @@ export const useAuthStore = defineStore("tenantBrand", () => {
     };
 
     return {
+        brand,
+        brands,
+        loading,
         addBrand,
         fetchBrands
     };

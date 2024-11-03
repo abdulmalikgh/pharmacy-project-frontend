@@ -6,6 +6,7 @@ import { useToast } from "vuestic-ui";
 
 
 export interface IBranch {
+    id?: number,
     name:string;
     location:string;
     address:string;

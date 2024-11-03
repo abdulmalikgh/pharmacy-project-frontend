@@ -57,7 +57,8 @@
     "staffs": "Staffs",
     "roles": "Roles",
     "projects": "Projects",
-    "brands": "Brands"
+    "brands": "Brands",
+    "branches": "Branches"
   },
   "messages": {
     "all": "See all messages",

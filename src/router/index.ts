@@ -63,6 +63,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: "brands",
         path: "brands",
+        component: () => import("../pages/tenant/brands/BrandList.vue"),
+      },
+      {
+        name: "branches",
+        path: "branches",
         component: () => import("../pages/tenant/branch/BranchList.vue"),
       },
       {
