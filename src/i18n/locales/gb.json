@@ -56,7 +56,8 @@
     "users": "Users",
     "staffs": "Staffs",
     "roles": "Roles",
-    "projects": "Projects"
+    "projects": "Projects",
+    "brands": "Brands"
   },
   "messages": {
     "all": "See all messages",

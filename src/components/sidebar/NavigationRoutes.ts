@@ -40,6 +40,13 @@ export default {
       },
     },
     {
+      name: 'brands',
+      displayName: 'menu.brands',
+      meta: {
+        icon: 'group',
+      },
+    },
+    {
       name: 'projects',
       displayName: 'menu.projects',
       meta: {

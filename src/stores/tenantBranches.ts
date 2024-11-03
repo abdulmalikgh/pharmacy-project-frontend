@@ -11,7 +11,7 @@ export interface IBranch {
     address:string;
 }
 
-export const useAuthStore = defineStore("tenantBranches", () => {
+export const useTenantBranchesStore = defineStore("tenantBranches", () => {
     const branch = ref<IBranch>();
     const branches = ref<IBranch[]>([]);
     const loading = ref<Boolean>(false);
@@ -34,7 +34,8 @@ export const useAuthStore = defineStore("tenantBranches", () => {
         loading.value = true;
         try {
             const { data } = await ApiService.get("/tenant/admin/branch");
-            branches.value = data;
+            branches.value = data.data;
+            console.log('branch data', data)
             return data;
         } catch (error: any) {
             throw error.response;
@@ -43,11 +44,10 @@ export const useAuthStore = defineStore("tenantBranches", () => {
         };
     };
 
-    async function updateBranch(payload: any, index:any) {
+    async function updateBranch(payload: any,) {
         loading.value = true;
         try {
             const { data } = await ApiService.put(`/tenant/admin/branch/${payload.id}`, payload);
-            branches.value[index] = data
             return data;
         } catch (error: any) {
             throw error.response;
@@ -60,5 +60,9 @@ export const useAuthStore = defineStore("tenantBranches", () => {
         addBranch,
         updateBranch,
         fetchBranches,
+
+        branch,
+        loading,
+        branches,
     };
 });
