@@ -56,7 +56,7 @@ export const useTenantRolesStore = defineStore("tenatRoles", () => {
     async function fetchPermissions() {
       try {
           const { data } = await ApiService.get("/permissions");
-          permissions.value = data?.data;
+          permissions.value = data;
           return data;
       } catch (error: any) {
           throw error.response;

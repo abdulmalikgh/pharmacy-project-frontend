@@ -28,7 +28,7 @@ const defaultNewUser: IStaff = {
 }
 
 const newUser = ref<IStaff>({ ...defaultNewUser })
-
+console.log(props.staff)
 const isFormHasUnsavedChanges = computed(() => {
   const staffToCompare = props.staff ?? defaultNewUser;
 

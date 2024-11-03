@@ -54,7 +54,7 @@ import { onMounted, ref } from 'vue';
 import { IRole, useTenantRolesStore } from '../../../stores/tenantRoles';
 import { useToast, useModal } from 'vuestic-ui'
 
-import RoleTable from './widgets/RoleTable.vue';
+import RoleTable from "./widgets/RoleTable.vue";
 import AddRole from './widgets/AddRole.vue';
 
 const { init: notify } = useToast()
@@ -74,8 +74,8 @@ const {
     roles,
     loading, 
     permissions
-  } = storeToRefs(roleStore)
-
+  } = storeToRefs(roleStore);
+  
 const handleDeleteRole = async (role : any) => {
 
   notify({
