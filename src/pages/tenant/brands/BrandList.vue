@@ -116,7 +116,7 @@ const onBrandSaved = async (brand: IBrand) => {
   } else {
     await addBrand(brand);
     notify({
-      message: `${brand.name} has been created`,
+      message: `${brand.name} has been added`,
       color: 'success',
     });
   }

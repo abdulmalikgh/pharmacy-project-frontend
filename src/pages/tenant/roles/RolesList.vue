@@ -125,7 +125,7 @@ const onroleSaved = async (role: IRole) => {
   } else {
     addRole(role)
     notify({
-      message: `${role.name} has been created`,
+      message: `${role.name} has been added`,
       color: 'success',
     })
   }

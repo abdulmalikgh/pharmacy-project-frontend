@@ -6,12 +6,13 @@ import { useToast } from "vuestic-ui";
 
 
 export interface ICustomer {
-    name:string;
-    phone:string;
-    email:string;
+    id?: number;
+    name: string;
+    phone: string;
+    email: string;
 }
 
-export const useAuthStore = defineStore("tenantCustomer", () => {
+export const useCustomerStore = defineStore("tenantCustomer", () => {
     const customer = ref<ICustomer>();
     const customers = ref<ICustomer[]>([]);
     const loading = ref<Boolean>(false);
@@ -19,7 +20,7 @@ export const useAuthStore = defineStore("tenantCustomer", () => {
     async function addCustomer(payload: ICustomer) {
         loading.value = true;
         try {
-            const { data } = await ApiService.post("/tenant/admin/customer", payload);
+            const { data } = await ApiService.post("/tenant/customer", payload);
             customer.value = data;
             customers.value?.unshift(data)
             return data;
@@ -30,11 +31,11 @@ export const useAuthStore = defineStore("tenantCustomer", () => {
         };
     };
 
-    async function fetchCustomer() {
+    async function fetchCustomers() {
         loading.value = true;
         try {
-            const { data } = await ApiService.get("/tenant/admin/customer");
-            customers.value = data;
+            const { data } = await ApiService.get("/tenant/customer");
+            customers.value = data.data;
             return data;
         } catch (error: any) {
             throw error.response;
@@ -44,7 +45,9 @@ export const useAuthStore = defineStore("tenantCustomer", () => {
     };
 
     return {
+        loading,
+        customers,
         addCustomer,
-        fetchCustomer
+        fetchCustomers
     };
 });

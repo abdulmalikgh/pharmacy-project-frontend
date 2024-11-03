@@ -59,7 +59,8 @@
     "projects": "Projects",
     "brands": "Brands",
     "branches": "Branches",
-    "inventory":"Inventory"
+    "inventory":"Inventory",
+    "customers":"Customers"
   },
   "messages": {
     "all": "See all messages",

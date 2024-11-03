@@ -115,7 +115,7 @@ const onBranchSaved = async (branch: IBranch) => {
   } else {
     await addBranch(branch);
     notify({
-      message: `${branch.name} has been created`,
+      message: `${branch.name} has been added`,
       color: 'success',
     });
   }

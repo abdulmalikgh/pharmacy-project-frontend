@@ -69,7 +69,6 @@ const onSave = () => {
   <VaForm v-slot="{ isValid }" ref="add-role-form" class="flex-col justify-start items-start gap-4 inline-flex w-full">
     
     <div class="self-stretch flex-col justify-start items-start gap-4 flex">
-      <div class="">{{ isValid }}</div>
       <div class="flex gap-4 flex-col sm:flex-row w-full">
         <VaInput
           v-model="newRole.name"

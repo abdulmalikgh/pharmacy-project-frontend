@@ -127,7 +127,7 @@ const onInventorySaved = async (item: IInventory) => {
       expiry_date: moment(item?.expiry_date).format("YYYY-MM-DD")
     });
     notify({
-      message: `${item.name} has been created`,
+      message: `${item.name} has been added`,
       color: 'success',
     });
   }

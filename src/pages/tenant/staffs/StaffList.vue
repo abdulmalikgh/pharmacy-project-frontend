@@ -127,7 +127,7 @@ const onStaffSaved = async (staff: IStaff) => {
   } else {
     addStaff(staff)
     notify({
-      message: `${staff.first_name} ${staff.last_name}  has been created`,
+      message: `${staff.first_name} ${staff.last_name}  has been added`,
       color: 'success',
     })
   }
