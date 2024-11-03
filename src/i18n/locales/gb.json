@@ -58,7 +58,8 @@
     "roles": "Roles",
     "projects": "Projects",
     "brands": "Brands",
-    "branches": "Branches"
+    "branches": "Branches",
+    "inventory":"Inventory"
   },
   "messages": {
     "all": "See all messages",

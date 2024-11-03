@@ -37,7 +37,7 @@
 import { PropType, ref, computed, watch } from 'vue';
 import { useForm } from 'vuestic-ui';
 import { validators } from '../../../../services/utils';
-import { IBranch } from '@/stores/tenantBranches';
+import { IBranch } from '../../../../stores/tenantBranches';
 import { isEqual } from 'lodash'
 
 const props = defineProps({

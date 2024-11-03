@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue';
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { IRole } from '@/stores/tenantRoles';
+import { IRole } from '../../../../stores/tenantRoles';
 
 const { confirm } = useModal()
 

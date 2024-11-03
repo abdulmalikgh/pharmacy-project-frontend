@@ -47,6 +47,13 @@ export default {
       },
     },
     {
+      name: 'inventory',
+      displayName: 'menu.inventory',
+      meta: {
+        icon: 'group',
+      },
+    },
+    {
       name: 'brands',
       displayName: 'menu.brands',
       meta: {

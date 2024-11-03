@@ -2,7 +2,7 @@
 import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
 import { validators } from '../../../../services/utils'
-import { IRole } from '@/stores/tenantRoles';
+import { IRole } from '../../../../stores/tenantRoles';
 import { isEqual } from 'lodash';
 
 const props = defineProps({
